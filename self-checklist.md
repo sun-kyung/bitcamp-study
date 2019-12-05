@@ -22,7 +22,7 @@
 
 #### 자바 바이트코드와 자바 가상 머신
 
-- [X] 자바 바이트코드 실행 환경을 준비할 수 있다. OpenJDK 설치, JAVA_HOME 과 PATH 환경 변수 설정, Sublime 편집기 설치.
+- [ ] 자바 바이트코드 실행 환경을 준비할 수 있다. OpenJDK 설치, JAVA_HOME 과 PATH 환경 변수 설정, Sublime 편집기 설치.
 - [ ] 자바 바이트코드를 이해한다. `https://docs.oracle.com/javase/specs/jvms/se13/jvms13.pdf`
 - [ ] 바이트코드와 클래스 파일(.class)의 관계를 이해한다. `/HelloWorld.class`, `https://medium.com/@davethomas_9528/writing-hello-world-in-java-byte-code-34f75428e0ad`
 - [ ] 클래스 파일과 JVM의 관계를 이해한다. `$ javap HelloWorld.class`, `$ javap -verbose HelloWorld.class`
