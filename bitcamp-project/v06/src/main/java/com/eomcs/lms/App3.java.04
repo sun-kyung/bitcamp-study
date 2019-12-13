@@ -10,7 +10,7 @@ public class App3 {
     Scanner keyboard = new Scanner(System.in);
     
     int count = 0;
-    int[] no = new int [100];
+    int no[] = new int [100];
     String[] title = new String[100];
     Date[] date = new Date[100];
     int[] viewCount = new int[100];
