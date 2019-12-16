@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //문자 리터럴(literal) - 문자코드를 이용하여 문자 출력
 
-public class Exam42 {
+public class Exam4_2 {
   public static void main(String[] args) {
 
     //코드 값을 안다면 직접 코드 값을 사용하여 문자를 지정할 수 있음

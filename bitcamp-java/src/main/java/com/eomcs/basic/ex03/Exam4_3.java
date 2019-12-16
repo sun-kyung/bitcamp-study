@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //문자 리터럴(literal) - 작은 따옴표의 역할
 
-public class Exam43 {
+public class Exam4_3 {
   public static void main(String[] args) {
     System.out.println(0x0041); //정수 리터럴
     System.out.println((char)0xac00); //문자 코드임을 가리킨다

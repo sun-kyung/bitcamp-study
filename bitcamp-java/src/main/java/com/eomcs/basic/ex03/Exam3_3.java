@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //부동소수점 리터럴(literal) - 메모리 크기
 
-public class Exam33 {
+public class Exam3_3 {
   public static void main(String[] args) {
     // 8바이트 부동소수점 최소/최대 값
     System.out.println(Double.MAX_VALUE); 

@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //부동소수점 리터럴(literal)
 
-public class Exam31 {
+public class Exam3_1 {
   public static void main(String[] args) {
     // 고정소수점
     System.out.println(3.14159);

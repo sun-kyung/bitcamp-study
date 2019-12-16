@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //정수 리터럴(literal) - 메모리 크기와 유효 값 범위
 
-public class Exam23 {
+public class Exam2_3 {
   public static void main(String[] args) {
     // 리터럴 : 4바이트 (기본), 8바이트
     // 리터럴에 아무런 표시를 안 하면 기본이 4바이트 정수를 의미한다

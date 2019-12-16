@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //부동소수점 리터럴(literal) - 부동소수점의 리터럴은 기본이 왜 8바이트인가?
 
-public class Exam342 {
+public class Exam3_42 {
   public static void main(String[] args) {
 
     System.out.println(54345.66f);

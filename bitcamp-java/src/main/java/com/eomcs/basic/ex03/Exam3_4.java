@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //부동소수점 리터럴(literal) - 부동소수점을 메모리에 저장하기
 
-public class Exam34 {
+public class Exam3_4 {
   public static void main(String[] args) {
     // 4바이트 부동소수점 유효 자릿수 : 7자리
     

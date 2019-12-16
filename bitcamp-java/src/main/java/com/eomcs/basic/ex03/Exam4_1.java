@@ -2,7 +2,7 @@ package com.eomcs.basic.ex03;
 
 //문자 리터럴(literal)
 
-public class Exam41 {
+public class Exam4_1 {
   public static void main(String[] args) {
     //직접 문자를 작성할 수 있다
     // => '문자'
