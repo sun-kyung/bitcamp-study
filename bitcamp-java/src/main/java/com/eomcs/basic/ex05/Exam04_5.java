@@ -58,7 +58,7 @@ public class Exam04_5 {
 
         //lang2 |= 0x00; // css = false
 
-        // 즉 비트를 이용하여 각 데이터의 true/false를 표현한다.
+        // 실무에서는 이렇게 비트를 이용하여 여러 개의 true/false를 저장하기도 한다
         
     }
 }

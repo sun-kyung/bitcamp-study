@@ -1,4 +1,4 @@
-package com.eomcs.basic.ex04.assignment3;
+package com.eomcs.basic.ex05.assignment;
 
 // 입력? n m
 // n 부터 m 까지의 합은  입니다
