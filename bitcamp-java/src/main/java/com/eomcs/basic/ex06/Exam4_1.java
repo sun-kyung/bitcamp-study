@@ -23,6 +23,7 @@ public class Exam4_1 {
       System.out.println(i);
       i++; 
     }
+    System.out.println(i);
 
     System.out.println("----------------------");
     i = 1;
