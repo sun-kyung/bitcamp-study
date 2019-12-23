@@ -14,6 +14,7 @@ public class Exam0220 {
     System.out.printf("%d살 %s님 반갑습니다.\n", age, name);
 
     //System.out.println(name + "살 " + name + "님 반갑습니다.");
+
   }
 
   public static void main(String[] args) {
