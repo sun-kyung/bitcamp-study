@@ -14,7 +14,6 @@ public class Exam0220 {
     System.out.printf("%d살 %s님 반갑습니다.\n", age, name);
 
     //System.out.println(name + "살 " + name + "님 반갑습니다.");
-
   }
 
   public static void main(String[] args) {
@@ -58,3 +57,13 @@ public class Exam0220 {
 //    name과 age 변수가 파라미터이다.
 //
 // 현장에서는 "아규먼트"와 "파라미터"를 구분하지 않고 사용한다. 
+
+
+
+
+
+
+
+
+
+
