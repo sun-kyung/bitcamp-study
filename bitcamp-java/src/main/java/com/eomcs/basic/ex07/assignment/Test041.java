@@ -12,25 +12,21 @@ public class Test041 {
     // 사용자로부터 정수 값을 입력 받는다.
     System.out.print("입력? ");
     int n = keyScan.nextInt();
+    keyScan.close();
 
     
     // n! 을 계산한다.
     int result = factorial(n);
     System.out.printf("%d! = ", n);
     for (int i = 1; i < n; i++) {
-      if(i == n) {
+
         System.out.printf("%d * ", i);
       }
       System.out.printf("%d = ", n);
+      System.out.println(result);
     }
-    System.out.println(result);
     
     // 결과 값을 출력한다.
-    
-    
-    keyScan.close();
-  }
-  
   static int factorial(int n) {
     // 코드를 완성하시오!
     //f(n) = n * f(n -1)
