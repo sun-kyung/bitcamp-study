@@ -5,17 +5,18 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Member; 
 
 public class MemberHandler {
-  MemberList memberList = new MemberList();
+
+  //인스턴스 필드(개별적으로 관리해야 하는 변수) - new명령을 통해 생성
+  Member[] members;
+  int memberCount = 0;
+  
+  //클래스 필드(공유하는 변수) - 클래스가 메모리에 로딩될 때 자동으로 생성
+  static final int MEMBER_SIZE = 100;
   public Scanner input;
   
   public MemberHandler(Scanner input) {
     this.input = input;
-    memberList = new MemberList();
-  }
-  
-  public MemberHandler(Scanner input, int capacity) {
-    this.input = input;
-    memberList = new MemberList(capacity);
+    this.members = new Member[MEMBER_SIZE];
   }
   
   public void addMember() {
@@ -41,16 +42,18 @@ public class MemberHandler {
 
     member.setRegisteredDate(new Date(System.currentTimeMillis()));
 
-    memberList.add(member);
+    this.members[this.memberCount++] = member;
     System.out.println("저장하였습니다");
 
   }
   public void listMember() {
-    Member[] members = memberList.toArray();
-    for (Member m : members) {
+    for (int i = 0; i < this.memberCount; i++) {
+      Member m = this.members[i];
+
       System.out.printf("\n번호: %d\n이름: %s\n이메일: %s\n암호: %s\n사진: %s\n전화: %s\n가입일: %s\n", 
           m.getNo(), m.getName(), m.getEmail(), m.getPassword(), m.getPhoto(), 
           m.getTel(), m.getRegisteredDate());
     }
   }
+
 }
