@@ -5,17 +5,17 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
-  ArrayList boardList;
+  BoardList boardList = new BoardList();
   Scanner input;
 
   public BoardHandler(Scanner input){
     this.input = input;
-    this.boardList = new ArrayList();
+    boardList = new BoardList();
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    this.boardList = new ArrayList(capacity);
+    boardList = new BoardList(capacity);
   }
 
   public void addBoard() {
@@ -33,13 +33,13 @@ public class BoardHandler {
     System.out.println("저장하였습니다");
   }
   public void detailBoard() {
-    System.out.print("게시물 인덱스?");
-    int index = input.nextInt();
+    System.out.print("게시물 번호?");
+    int no = input.nextInt();
     input.nextLine();
 
-    Board board = (Board) this.boardList.get(index);
+    Board board = boardList.get(no);
     if (board == null) {
-      System.out.println("게시물 인덱스가 유효하지 않습니다");
+      System.out.println("게시물 번호가 유효하지 않습니다");
       return;
     }
     System.out.printf("번호: %d\n", board.getNo());
@@ -49,9 +49,8 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Object[] arr = this.boardList.toArray();
-    for (Object obj : arr) {
-      Board b = (Board)obj;
+    Board[] boards = boardList.toArray();
+    for (Board b : boards) {
       System.out.printf("%d, %s, %s, %d\n", b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
   }
