@@ -34,13 +34,16 @@ public class Exam0120 {
     
     public static void main(String[] args) {
         Score s1 = new Score("홍길동", 100, 100, 100);
-        System.out.println(s1.toString());
-        // toString()을 오버라이딩 했기 때문에 다른 결과가 출력된다.
+        String str = s1.toString();
+        // Score 클래스에서 Object의 toString을 오버라이딩했기 때문에
+        // Score 의 toString()을 호출한다
         
+        System.out.println(str);
         // println()에 String이 아닌 객체를 넘기면,
         // println()에서 내부적으로 그 객체에 대해 toString()을 호출하여
         // 그 리턴 값을 출력한다.
         // 따라서, 다음 코드는 위의 코드와 같은 결과를 출력한다.
+        
         System.out.println(s1);
         // 그러니 println()으로 객체의 값을 출력할 때 굳이 toString()을 번거롭게 호출하지 말라! 
     }
