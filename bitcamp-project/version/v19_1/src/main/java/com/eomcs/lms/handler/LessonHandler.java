@@ -63,14 +63,12 @@ public class LessonHandler {
   
   public void detailLesson() {
     System.out.print("수업 인덱스? ");
-    int no = input.nextInt();
+    int index = input.nextInt();
     input.nextLine(); // 숫자 뒤의 남은 공백 제거
-    
-    int index = indexOfLesson(no);
     
     Lesson lesson = this.lessonList.get(index);
     
-    if (index == -1) {
+    if (lesson == null) {
       System.out.println("해당 수업을 찾을 수 없습니다.");
       return;
     }
@@ -85,11 +83,12 @@ public class LessonHandler {
   
   public void deleteLesson() {
     System.out.print("수업 인덱스?");
-    int no = input.nextInt();
+    int index = input.nextInt();
     input.nextLine();
-    int index = indexOfLesson(no);
-
-    if (index == -1) {
+    
+    Lesson lesson = this.lessonList.get(index);
+    
+    if (lesson == null) {
       System.out.println("수업 인덱스가 유효하지 않습니다");
       return;
     }
@@ -99,9 +98,8 @@ public class LessonHandler {
   
   public void updateLesson() {
     System.out.print("수업 인덱스?");
-    int no = input.nextInt();
+    int index = input.nextInt();
     input.nextLine();
-    int index = indexOfLesson(no);
 
     Lesson oldLesson = this.lessonList.get(index);
     if (oldLesson == null) {
@@ -175,13 +173,4 @@ public class LessonHandler {
     }
 
   }
-  private int indexOfLesson(int no) {
-    for (int i = 0; i< this.lessonList.size(); i++) {
-      if (this.lessonList.get(i).getNo() == no) {
-        return i;
-      }
-    }
-    return -1;
-  }
-  
 }
