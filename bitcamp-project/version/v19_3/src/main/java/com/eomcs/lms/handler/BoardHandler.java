@@ -2,16 +2,16 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.LinkedList;
+import com.eomcs.util.ArrayList;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
-  LinkedList<Board> boardList;
+  ArrayList<Board> boardList;
   public Prompt prompt;
 
   public BoardHandler(Prompt prompt){
     this.prompt = prompt;
-    this.boardList = new LinkedList<>();
+    this.boardList = new ArrayList<>();
   }
 
   public void addBoard() {

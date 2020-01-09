@@ -1,24 +1,32 @@
 package com.eomcs.lms.handler;
 
 import java.sql.Date;
+import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.LinkedList;
-import com.eomcs.util.Prompt;
+import com.eomcs.util.ArrayList;
 
 public class BoardHandler {
-  LinkedList<Board> boardList;
-  public Prompt prompt;
+  ArrayList<Board> boardList;
+  Scanner input;
 
-  public BoardHandler(Prompt prompt){
-    this.prompt = prompt;
-    this.boardList = new LinkedList<>();
+  public BoardHandler(Scanner input){
+    this.input = input;
+    this.boardList = new ArrayList<>();
+  }
+
+  public BoardHandler(Scanner input, int capacity) {
+    this.input = input;
+    this.boardList = new ArrayList<>(capacity);
   }
 
   public void addBoard() {
     Board board = new Board();
 
-    board.setNo(prompt.inputInt("번호?"));
-    board.setTitle(prompt.inputString("내용?"));
+    System.out.print("번호?");
+    board.setNo(input.nextInt());
+    input.nextLine();
+    System.out.print("내용?");
+    board.setTitle(input.nextLine());
     board.setDate(new Date(System.currentTimeMillis())); 
     board.setViewCount(0);
 
@@ -36,7 +44,12 @@ public class BoardHandler {
     }
   }
   public void detailBoard() {
-    int index = indexOfBoard(prompt.inputInt("번호? "));
+    System.out.print("번호? ");
+    int no = input.nextInt();
+    input.nextLine(); // 숫자 뒤의 남은 공백 제거
+
+    // 게시글 번호로 객체를 찾는다
+    int index = indexOfBoard(no);
 
     if (index == -1) {
       System.out.println("해당 번호의 게시글이 없습니다.");
@@ -51,7 +64,12 @@ public class BoardHandler {
   }
 
   public void deleteBoard() {
-    int index = indexOfBoard(prompt.inputInt("게시글 번호?"));
+    System.out.print("게시글 번호?");
+    int no = input.nextInt();
+    input.nextLine();
+
+    // 게시글 번호로 객체를 찾는다
+    int index = indexOfBoard(no);
 
     if (index == -1) {
       System.out.println("해당 번호의 게시글이 없습니다.");
@@ -62,27 +80,32 @@ public class BoardHandler {
   }
 
   public void updateBoard() {
-    int index = indexOfBoard(prompt.inputInt("게시물 번호?"));
+    System.out.print("게시물 번호?");
+    int no = input.nextInt();
+    input.nextLine();
     Board newBoard = new Board();
+    // 게시글 번호로 객체를 찾는다
+    int index = indexOfBoard(no);
 
     if (index == -1) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
     Board oldBoard = this.boardList.get(index);
-    newBoard.setTitle(prompt.inputString(String.format("내용(%s)? ", 
-        oldBoard.getTitle()),oldBoard.getTitle()));
+    System.out.printf("내용(%s)?", oldBoard.getTitle());
+    String title = input.nextLine();
 
-    newBoard.setNo(oldBoard.getNo());
-    newBoard.setViewCount(oldBoard.getViewCount());
-    newBoard.setDate(oldBoard.getDate()); 
-
-    if(oldBoard.equals(newBoard)) {
+    if (title.length() == 0) {
       System.out.println("게시물 변경을 취소했습니다");
       return;
     }
-    boardList.set(index, newBoard);
-    System.out.println("게시물을 변경했습니다");
+    newBoard.setNo(oldBoard.getNo());
+    newBoard.setViewCount(oldBoard.getViewCount());
+    newBoard.setTitle(title);
+    newBoard.setDate(new Date(System.currentTimeMillis())); 
+
+    this.boardList.set(index, newBoard);
+    System.out.println("게시글을 변경했습니다");
   }
   
   private int indexOfBoard(int no) {
