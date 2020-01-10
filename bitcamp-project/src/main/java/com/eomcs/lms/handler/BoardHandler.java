@@ -9,7 +9,7 @@ public class BoardHandler {
   LinkedList<Board> boardList;
   public Prompt prompt;
 
-  public BoardHandler(Prompt prompt){
+  public BoardHandler(Prompt prompt) {
     this.prompt = prompt;
     this.boardList = new LinkedList<>();
   }

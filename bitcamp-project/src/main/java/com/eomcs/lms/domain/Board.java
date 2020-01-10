@@ -8,9 +8,6 @@ public class Board {
     private Date date;
     private int viewCount;
     private String writer;
-    public int getNo() {
-      return no;
-    }
     
     @Override
     public int hashCode() {
@@ -55,6 +52,10 @@ public class Board {
       return true;
     }
 
+    public int getNo() {
+      return no;
+    }
+    
     public void setNo(int no) {
       this.no = no;
     }
