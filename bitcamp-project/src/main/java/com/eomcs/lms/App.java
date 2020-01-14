@@ -1,9 +1,14 @@
 package com.eomcs.lms;
 
 import java.util.Scanner;
+import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.ArrayList;
+import com.eomcs.util.LinkedList;
 import com.eomcs.util.Prompt;
 import com.eomcs.util.Queue;
 import com.eomcs.util.Stack;
@@ -17,9 +22,15 @@ public class App {
   public static void main(String[] args) {
 
     Prompt prompt = new Prompt(keyboard);
-    BoardHandler boardHandler = new BoardHandler(prompt);
-    LessonHandler lessonHandler = new LessonHandler(prompt);
-    MemberHandler memberHandler = new MemberHandler(prompt);
+
+    LinkedList<Board> boardList = new LinkedList<>();
+    BoardHandler boardHandler = new BoardHandler(prompt, boardList);
+    
+    ArrayList<Lesson> lessonList = new ArrayList<>();
+    LessonHandler lessonHandler = new LessonHandler(prompt, lessonList);
+    
+    LinkedList<Member> memberList = new LinkedList<>();
+    MemberHandler memberHandler = new MemberHandler(prompt, memberList);
     String command;
     do {
       System.out.print("\n명령> ");
