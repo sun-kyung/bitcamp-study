@@ -1,4 +1,4 @@
-# 24_4 - `Iterator` 구현체와 익명 클래스 (anonymous class)
+# 24_5 - `Iterator` 구현체와 익명 클래스 (anonymous class)
 
 ## 학습 목표
 
