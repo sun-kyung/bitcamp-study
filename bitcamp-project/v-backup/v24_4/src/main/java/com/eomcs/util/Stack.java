@@ -54,19 +54,43 @@ public class Stack <E> implements Cloneable {
      }
   }
   public Iterator<E> iterator() {
-    // anonymous class 인스턴스를 한 개만 생성한다면 로컬클래스를 익명클래스로 정의하라
-    
-    return new Iterator<E>() {
-      Stack<E> stack = (Stack<E>) Stack.this.clone();
+    // this = 인스턴스 주소;
+    // local class 특정 메서드 내에서만 쓰는 클래스라면 로컬클래스로 선언하라
+    class StackIterator<T> implements Iterator<T> {
+      Stack<T> stack;
+      
+      @SuppressWarnings("unchecked")
+      public StackIterator() {
+        this.stack = (Stack<T>) Stack.this.clone();
+      }
       
       @Override
       public boolean hasNext() {
         return !stack.empty();
       }
       @Override
-      public E next() {
+      public T next() {
         return stack.pop();
       }
-    };
+    }
+    return new StackIterator<E>();
   }
+  /*
+  static void m1() {
+    // 스태틱 메서드는 다음과 같이 클래스이름으로 바로 호출할 수 있기때문에 this 변수가 없다
+    // 예) Stack.m1();
+     // 스태틱 메서드에서 로컬클래스를 정의한다면
+     // 그 로컬클래스는 바깥 클래스의 인스턴스를 직접 정의할 수 없다
+    class A {
+      A() {
+        Stack s;
+        s = Stack.this; // 컴파일 오류
+        // 이 로컬클래스는 m1()에서 사용할 것이다
+        // m1()은 바깥 클래스의 인스턴스 주소를 모른다
+        // 그런데 로컬클래스에서 위와 같이 바깥 클래스의 인스턴슬르 사용하려 한다면
+        // 문제가 될 것이다
+        // 이런 상황을 방지하고자 자바는 컴파일 오류를 발생시킨다
+      }
+    }
+  }*/
 }

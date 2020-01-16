@@ -17,20 +17,29 @@ public class Queue<E> extends LinkedList<E> implements Cloneable{
     return temp;
   }
   public Iterator<E> iterator() {
-    // anonymous class
-    
-    return new Iterator<E>() {
-      // 인스턴스 블록 대신 변수 초기화(variable initializer)문법으로 필드값을 설정한다
-      Queue<E> queue = (Queue<E>) Queue.this.clone();
+    // local class
+    class QueueIterator<T> implements Iterator<T> {
+      Queue<T> queue;
+      
+      @SuppressWarnings("unchecked")
+      public QueueIterator() {
+        this.queue = (Queue<T>) Queue.this.clone();
+      }
       
       @Override
       public boolean hasNext() {
         return queue.size() > 0;
       }
       @Override
-      public E next() {
+      public T next() {
         return queue.poll();
       }
-    };
+    }
+    // 로컬 클래스는 인스턴스 멤버가 아니다
+    // 따라서 로컬클래스의 생성자를 호출할 때 앞쪽에 this를 지정해서는 안 된다
+    return new QueueIterator<>();
   }
+  
+  // non-static nested class = inner class
+
 }

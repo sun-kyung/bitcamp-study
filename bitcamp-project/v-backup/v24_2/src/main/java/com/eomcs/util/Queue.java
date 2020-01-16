@@ -17,20 +17,24 @@ public class Queue<E> extends LinkedList<E> implements Cloneable{
     return temp;
   }
   public Iterator<E> iterator() {
-    // anonymous class
+    return new QueueIterator<>(this);
+  }
+  
+  static class QueueIterator<E> implements Iterator<E> {
+    Queue<E> queue;
+    int cursor;
     
-    return new Iterator<E>() {
-      // 인스턴스 블록 대신 변수 초기화(variable initializer)문법으로 필드값을 설정한다
-      Queue<E> queue = (Queue<E>) Queue.this.clone();
-      
-      @Override
-      public boolean hasNext() {
-        return queue.size() > 0;
-      }
-      @Override
-      public E next() {
-        return queue.poll();
-      }
-    };
+    public QueueIterator(Queue<E> queue) {
+      this.queue = queue.clone();
+    }
+    
+    @Override
+    public boolean hasNext() {
+      return queue.size() > 0;
+    }
+    @Override
+    public E next() {
+      return queue.poll();
+    }
   }
 }

@@ -54,19 +54,24 @@ public class Stack <E> implements Cloneable {
      }
   }
   public Iterator<E> iterator() {
-    // anonymous class 인스턴스를 한 개만 생성한다면 로컬클래스를 익명클래스로 정의하라
+    return new StackIterator<E>(this);
+  }
+  
+  static class StackIterator<E> implements Iterator<E> {
+    Stack<E> stack;
+    int cursor;
     
-    return new Iterator<E>() {
-      Stack<E> stack = (Stack<E>) Stack.this.clone();
-      
-      @Override
-      public boolean hasNext() {
-        return !stack.empty();
-      }
-      @Override
-      public E next() {
-        return stack.pop();
-      }
-    };
+    public StackIterator(Stack<E> stack) {
+      this.stack = stack.clone();
+    }
+    
+    @Override
+    public boolean hasNext() {
+      return !stack.empty();
+    }
+    @Override
+    public E next() {
+      return stack.pop();
+    }
   }
 }
