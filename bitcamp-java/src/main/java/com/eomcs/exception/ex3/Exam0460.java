@@ -6,16 +6,17 @@ import java.sql.SQLException;
 
 public class Exam0460 {
 
-  static void m(int i) 
-      throws Exception, RuntimeException, SQLException, IOException {
+  static void m(int i) throws Exception, RuntimeException, SQLException, IOException {
     if (i == 0)
       throw new Exception();
     else if (i == 1)
       throw new RuntimeException();
-    else if (i == 2) 
+    else if (i == 2)
       throw new SQLException();
-    else 
+    else if (i == 3)
       throw new IOException();
+    else if (i < 0)
+      throw new Error(); // 시스템 오류가 일어난다고 가정
   }
 
   public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Exam0460 {
 
     } catch (RuntimeException | SQLException | IOException e) {
       // OR 연산자를 사용하여 여러 개의 예외를 묶어 받을 수 있다.
-      //    
+      //
     } catch (Exception e) {
 
     }
