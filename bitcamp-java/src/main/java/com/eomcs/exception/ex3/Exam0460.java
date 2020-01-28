@@ -15,8 +15,6 @@ public class Exam0460 {
       throw new SQLException();
     else if (i == 3)
       throw new IOException();
-    else if (i < 0)
-      throw new Error(); // 시스템 오류가 일어난다고 가정
   }
 
   public static void main(String[] args) {

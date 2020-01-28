@@ -1,4 +1,4 @@
-// 예외 처리 문법을 적용하기 전 - 리턴 값을 파악하여 오류 여부를 확인하기
+// 예외 처리 문법을 적용하기 전 - 리턴 값을 확인하여 오류 여부를 파악하기
 package com.eomcs.exception.ex1;
 
 public class Exam0120 {

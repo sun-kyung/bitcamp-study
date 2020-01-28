@@ -1,6 +1,8 @@
 // 예외 던지기 - 예외 상황을 호출자에게 알려주기
 package com.eomcs.exception.ex3;
 
+import java.io.FileNotFoundException;
+
 public class Exam0210 {
 
   // throw 명령어를 사용하여 예외 정보를 호출자에게 던진다.
@@ -26,30 +28,21 @@ public class Exam0210 {
   //
 
   // 오류를 던진다면 반드시 메서드 선언부에 어떤 오류를 던지는지 선언해야 한다.
-  static void m() throws Throwable {
+  // => 메서드 호출자에게 알려주는 것이다.
+  static void m1() throws Throwable {
     throw new Throwable(); // OK!
+    // 예외를 던질 때 Throwable 클래스를 직접 사용하지 말라!
+    // 그 하위 클래스를 사용하라.
+    // 특히 애플리케이션 오류를 의미하는 Exception 클래스를 사용하라.
   }
 
-  static void m2() throws Error {
-    throw new Error();
-    // OK! 하지만 이 계열의 클래스를 사용하지 말라!
-    // 왜? JVM 관련 오류일 때 사용하는 클래스이다.
-  }
-
-  // java.lang.Error 계열의 오류를 던질 때는 어떤 오류를 던지는지 선언하지 않아도 된다.
-  static void m3() {
-    throw new Error();
-  }
-
-  // Exception 계열의 예외를 던질 때는 반드시 메서드 선언부에 어떤 예외를 던지는지
-  // 지정해야 한다.
-  static void m4() throws Exception {
-    throw new Exception(); // OK! 보통 개발자가 사용하는 예외 클래스이다.
-  }
-
-  static void m5() throws Exception {
-    throw new String(); // 컴파일 오류!
-    // throw 로 던질 수 있는 객체는 오직 java.lang.Throwable 타입만 가능하다.
+  // 여러 개의 오류를 던지는 경우 메서드 선언부에 그대로 나열하라.
+  static void m2() throws FileNotFoundException, RuntimeException {
+    int a = 100;
+    if (a < 0)
+      throw new FileNotFoundException(); // OK!
+    else
+      throw new RuntimeException(); // OK!
   }
 
   public static void main(String[] args) {}

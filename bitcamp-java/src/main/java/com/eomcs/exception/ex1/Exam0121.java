@@ -3,9 +3,9 @@ package com.eomcs.exception.ex1;
 
 public class Exam0121 {
   public static void main(String[] args) {
-
-    // 리턴 값을 검사하여 오류 여부를 파악하는 방식은 다음과 같은 문제가 있다
-    // 정상적인 계산 결과도 오류로 취급할 수 있다는 점이다
+    // 리턴 값을 검사하여 오류 여부를 파악하는 방식은
+    // 다음과 같은 문제가 있다.
+    // 정상적인 계산 결과도 오류로 취급할 수 있다는 점이다.
     int result = Calculator.compute("-", 6, 7);
 
     // 위의 계산 결과는 정상적인 값이다.
