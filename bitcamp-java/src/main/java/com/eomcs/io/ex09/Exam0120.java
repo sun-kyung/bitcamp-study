@@ -1,12 +1,14 @@
-// DataOutputStream을 이용하여 객체 출력 - 버퍼 사용 후
+// Java I/O API 사용하기 - BufferedOutputStream
 package com.eomcs.io.ex09;
 
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
 public class Exam0120 {
 
   public static void main(String[] args) throws Exception {
-    FileOutputStream fileOut = new FileOutputStream("temp/test8_2.data");
+    FileOutputStream fileOut = new FileOutputStream("temp/test9_2.data");
     BufferedOutputStream bufOut = new BufferedOutputStream(fileOut);
     DataOutputStream out = new DataOutputStream(bufOut);
 
@@ -19,7 +21,7 @@ public class Exam0120 {
     long startTime = System.currentTimeMillis();
 
     for (int i = 0; i < 100000; i++) {
-      out.writeUTF(member.name); 
+      out.writeUTF(member.name);
       out.writeInt(member.age);
       out.writeBoolean(member.gender);
     }
@@ -33,3 +35,27 @@ public class Exam0120 {
   }
 
 }
+
+// java.io 패키지의 클래스들
+// 1) byte(binary) stream class
+// - 입력 : InputStream
+//   - data sink stream class
+//      - 실제 데이터를 저장하는 일을 한다
+//      - 예 ) FileInputStream, ByteArrayInputStream, PipedInputStream
+//   - data processing stream class (=decorator)
+//      - 데이터를 중간에서 가공하는 일을 한다
+//      - 예) BufferedInputStream, DataInputStream, ObjectInputStream
+// - 출력 : OutputStream
+//   - data sink stream class
+//      - 실제 데이터를 꺼내는 일을 한다
+//      - 예 ) FileInputStream, ByteArrayInputStream, PipedInputStream
+//   - data processing stream class (=decorator)
+//      - 데이터를 중간에서 가공하는 일을 한다
+//      - 예) BufferedInputStream, DataInputStream, ObjectInputStream
+// 2) character stream class
+// - 입력 : Reader
+//      - data sink stream class
+//      - data processing stream class (=decorator)
+// - 출력 : Writer
+//      - data sink stream class
+//      - data processing stream class (=decorator)
