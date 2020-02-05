@@ -21,7 +21,7 @@ public class MemberDetailCommand implements Command {
     try {
       int no = prompt.inputInt("회원 번호? ");
 
-      out.writeUTF("/board/detail");
+      out.writeUTF("/member/detail");
       out.writeInt(no);
       out.flush();
 
