@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.11'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
 
