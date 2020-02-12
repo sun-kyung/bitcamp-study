@@ -1,7 +1,7 @@
 // 스레드 그룹의 부모 그룹
 package com.eomcs.concurrent.ex2;
 
-public class Exam05 {
+public class Exam0150 {
 
   public static void main(String[] args) {
     Thread main = Thread.currentThread();
@@ -16,11 +16,10 @@ public class Exam05 {
     if (grandparentGroup != null) {
       System.out.println(grandparentGroup.getName());
     }
-
-    // "system" 스레드 그룹: 
-    //      =>"main" 스레드 그룹:
-    //          =>"main" 스레드
-    //          =>다른 하위 그룹은 없다!
   }
-
 }
+
+// JVM의 스레드 계층도:
+// system(TG)
+// => main(TG)
+// ...=> main(T)
