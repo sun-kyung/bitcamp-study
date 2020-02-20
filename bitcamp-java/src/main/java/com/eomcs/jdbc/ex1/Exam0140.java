@@ -1,35 +1,45 @@
-// JDBC 프로그래밍 개요 - JDBC 드라이버 준비
+// JDBC 드라이버 준비 - DriverManager가 Driver 구현체를 자동 로딩
 package com.eomcs.jdbc.ex1;
 
 import java.sql.DriverManager;
 
-// JDBC 드라이버 다운로드 및 설정
-// 1) 직접 설정하기
-// - java-basic/lib 폴더 생성
-// - c:\Program Files (x86)\MySQL\Connector J x.x\mysql-connector-java-x.x.jar 복사
-// - java-basic/lib 폴더에 붙여넣기
-// - 컴파일과 실행할 때 .jar 파일을 사용할 수 있도록 CLASSPATH에 추가한다.
-//   project 컨텍스트 메뉴/build path/configure build path.../Libraries/Add Jars...
-//
 public class Exam0140 {
 
-  public static void main(String[] args) throws Exception {
-    // 1) JDBC 드라이버 로딩 
-    // => 드라이버 객체를 생성하지 않고 클래스를 로딩하면,
-    //    자동으로 객체가 생성되어 DriverManager에 등록된다.
-    Class.forName("com.mysql.jdbc.Driver");
+  public static void main(String[] args) {
 
-    // DriverManager에 자동 등록된 것을 확인해보자!
-    java.sql.Driver driver = DriverManager.getDriver("jdbc:mysql:");
-    System.out.println("JDBC 드라이버 로딩 및 등록 완료!");
-    // 해당 드라이버가 등록되지 않았으면 예외가 발생할 것이다.
+    // JDBC 드라이버 로딩 방법4: Driver 구현체 자동 로딩
+    // => DriverManager를 사용할 때,
+    // DriverManager 는 다음 절차에 따라 Driver 구현체를 찾아서 자동으로 로딩한다.
+    //
+    // 1) jdbc.drivers 시스템 프로퍼티에 지정된 구현체를 찾아 로딩한다.
+    // => jdbc.drivers=foo.bah.Driver:wombat.sql.Driver:bad.taste.ourDriver
+    // => 이때 각 Driver 구현체는 'system class loader'를 통해 로딩된다.
+    // => 시스템 프로퍼티? JVM에 설정된 "key=value" 이다.
+    // => 시스템 프로퍼티를 꺼내는 방법? 다음과 같다.
+    System.out.printf("java.home=%s\n", System.getProperty("java.home"));
+    System.out.printf("user.home=%s\n", System.getProperty("user.home"));
 
+    // => 시스템 프로퍼티 설정 방법
+    // 예1) JVM을 실행할 때 JVM 옵션을 지정하는 방법
+    // - java -Djdbc.drivers=클래스명:클래스명:클래스명 Exam0140
+    //
+    // 예2) 프로그램 코드에서 설정하는 방법
+    // - System.setProperty("jdbc.drivers", "com.eomcs.jdbc.ex1.MyDriver");
+    //
+    System.setProperty("jdbc.drivers", "com.eomcs.jdbc.ex1.MyDriver:org.mariadb.jdbc.Driver");
+    System.out.printf("jdbc.drivers=%s\n", System.getProperty("jdbc.drivers"));
+
+    try {
+      // Driver 구현체를 로딩하지 않는다!
+
+      // DriverManager에 자동 등록된 것을 확인해보자!
+      java.sql.Driver driver = DriverManager.getDriver("jdbc:mariadb:");
+      System.out.println(driver);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
-
-
-
-
-
 
 
