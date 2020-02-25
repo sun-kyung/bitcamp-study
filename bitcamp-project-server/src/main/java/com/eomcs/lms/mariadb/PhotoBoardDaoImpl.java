@@ -25,12 +25,19 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
     try (Statement stmt = con.createStatement()) {
 
-      // DBMS에게 데이터 입력하라는 명령을 보낸다
-      // SQUL 문법 :
-      // insert into 테이블명(컬럼명1, 컬럼명2, ...) values(값1, 값2, ...)
-      // => executeUpdate()의 리턴 값은 서버에 입력된 데이터의 개수이다
       int result = stmt.executeUpdate("insert into lms_photo(titl,lesson_id) values('"
-          + photoBoard.getTitle() + "'," + photoBoard.getLesson().getNo() + ")");
+          + photoBoard.getTitle() + "'," + photoBoard.getLesson().getNo() + ")",
+          Statement.RETURN_GENERATED_KEYS); // insert 한 후에 PK값 리턴받기 (auto increasement)
+
+      // auto-incerament PK 값을 꺼내기 위한 준비를 한다
+      try (ResultSet generatedKeySet = stmt.getGeneratedKeys()) {
+
+        // PK 컬럼의 값을 가져온다
+        generatedKeySet.next();
+
+        // 가져온 PK컬럼의 값을 PhotoBoard객체에 거꾸로 담는다
+        photoBoard.setNo(generatedKeySet.getInt(1));
+      }
       return result;
     }
   }
