@@ -109,7 +109,7 @@ public class ServerApp {
     servletMap.put("/member/search", new MemberSearchServlet(memberDao));
 
     servletMap.put("/photoboard/list", new PhotoBoardListServlet(photoBoardDao, lessonDao));
-    servletMap.put("/photoboard/detail", new PhotoBoardDetailServlet(photoBoardDao));
+    servletMap.put("/photoboard/detail", new PhotoBoardDetailServlet(photoBoardDao, photoFileDao));
     servletMap.put("/photoboard/add",
         new PhotoBoardAddServlet(photoBoardDao, lessonDao, photoFileDao));
     servletMap.put("/photoboard/update", new PhotoBoardUpdateServlet(photoBoardDao));

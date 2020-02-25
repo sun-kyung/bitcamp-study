@@ -64,14 +64,22 @@ public class PhotoBoardAddServlet implements Servlet {
             continue;
           }
         }
-        PhotoFile photoFile = new PhotoFile();
-        photoFile.setFilepath(filepath);
-        photoFile.setBoardNo(photoBoard.getNo());
 
-        photoFiles.add(photoFile);
+        // 1) 기본 생성자를 사용할 때
+        // PhotoFile photoFile = new PhotoFile();
+        // photoFile.setFilepath(filepath);
+        // photoFile.setBoardNo(photoBoard.getNo());
+        //
+        // photoFiles.add(photoFile);
+
+        // 2) 초기 값을 설정하는 생성자를사용할 때
+        // photoFiles.add(new PhotoFile(filepath, photoBoard.getNo()));
+
+        // 3) 세터 메서드를 활용하여 체인 방식으로 인스턴스 필드의 값을 설정
+        photoFiles.add(new PhotoFile().setFilepath(filepath).setBoardNo(photoBoard.getNo()));
       }
 
-      // ArrayList에 들어있는 PhotoFile데이터를 lms_photo_file 테이블에 ㅓㅈ장한다
+      // ArrayList에 들어있는 PhotoFile데이터를 lms_photo_file 테이블에 저장한다
       for (PhotoFile photoFile : photoFiles) {
         photoFileDao.insert(photoFile);
       }
