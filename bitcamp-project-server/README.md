@@ -1,62 +1,62 @@
-# 40_3 - Connection을 스레드에 보관하기: 트랜잭션 적용하기
-
-- 여러 개의 데이터 변경(insert/update/delete) 작업을 한 단위(트랜잭션)로 
-  다루려면 그 작업을 수행할 때 같은 Connection을 사용해야 한다.
-- 클라이언트 요청이 들어오면 스레드가 그 요청 처리를 담당한다.
-- 따라서 스레드가 실행되는 동안 수행하는 데이터 변경 작업을 
-  같은 트랜잭션으로 묶고 싶다면, 같은 Connection을 사용해야 한다.
-- 이런 이유로 스레드에 Connection 객체를 보관하는 것이다.
-
-다르게 표현해 보면,
-- 스레드에 Connection을 보관하면,
-- 스레드가 실행하는 동안 같은 DAO는 같은 Connection을 사용하게 할 수 있다.
-- 같은 Connection을 사용하여 데이터 변경 작업을 수행하면,
-- 한 단위의 작업(트랜잭션)으로 묶어 제어할 수 있다.
-- 즉 모든 작업이 성공했을 때 테이블에 그 결과를 적용하고,
-- 단 한 개의 작업이라도 실패하면 이전에 했던 작업을 모두 취소하는 것이 가능하다.  
+# 41_2 - Connection Pool 도입하기
 
 ## 학습목표
 
-- ConnectionFactory를 통해 얻은 Connection 객체를 가지고 트랜잭션을 다루기
+- Pooling 기법의 원리와 특징을 이해한다.
+- Connection Pool을 구현할 수 있다.
 
-### 메서드 별로 커넥션을 개별화 한 상태에서 트랜잭션을 적용하기 
+### Pooling 기법
 
-- 39, 40 단계로 가면서 커넥션을 메서드에서 준비하여 사용하였다.
-- 이런 관계로 PhotoBoardAddServlet/PhotoBoardUpdateServlet/PhotoBoardDeleteServlet에 
-  있었던 트랜잭션 처리 코드를 제거하였다.
-- 이제 다시 현 상태에서 트랜잭션 제어 코드를 추가해 보자.
+- 생성된 객체를 재사용 하는 것.
+- 객체를 사용한 후에 버리지 않고 보관한다.
+- 객체가 필요할 때 마다 빌려서 쓰고, 쓰고 난 후에는 반납한다.
+- 이점:
+  - 객체 생성에 소요되는 시간을 줄일 수 있다.
+  - 가비지 생성을 억제하기 때문에 메모리 낭비를 줄일 수 있다.
+- 예:
+  - DB 커넥션 풀, 스레드 풀 등
+- GoF의 'Flyweight' 디자인 패턴과 유사하다.
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/servlet/PhotoBoardAddServlet.java 변경
-- src/main/java/com/eomcs/lms/servlet/PhotoBoardUpdateServlet.java 변경
-- src/main/java/com/eomcs/lms/servlet/PhotoBoardDeleteServlet.java 변경
+- src/main/java/com/eomcs/sql/ConnectionFactory.java 삭제
+- src/main/java/com/eomcs/sql/DataSource.java 추가
+- src/main/java/com/eomcs/sql/PlatformTransactionManager.java 변경
+- src/main/java/com/eomcs/lms/dao/mariadb/XxxDaoImpl.java 변경
+- src/main/java/com/eomcs/lms/DataLoaderListener.java 변경
 - src/main/java/com/eomcs/lms/ServerApp.java 변경
 
 ## 실습  
 
-### 훈련1: PhotoBoardAddServlet에 트랜잭션을 적용하라.
+### 훈련1: DB 커넥션 풀 객체를 생성하라.
 
-- com.eomcs.lms.servlet.PhotoBoardAddServlet 변경
-  - ConnectionFactory를 주입 받는다.
-  - ConnectionFactory를 통해 Connection을 얻은 후에 트랜잭션을 제어한다.
-
-### 훈련2: PhotoBoardUpdateServlet에 트랜잭션을 적용하라.
-
-- com.eomcs.lms.servlet.PhotoBoardUpdateServlet 변경
-  - ConnectionFactory를 주입 받는다.
-  - ConnectionFactory를 통해 Connection을 얻은 후에 트랜잭션을 제어한다.
+- com.eomcs.sql.DataSource 추가
+  - ConnectionFactory를 DataSource로 이름을 변경한다.
+  - JDBC API에서는 커넥션 객체를 생성하고 관리하는 역할자를 DataSource로 정의하였다. 
+  - 그래서 이 이름과 같게 만들자.
+  - ConnectionFactory + Pooling 기능 = DataSource
   
-### 훈련3: PhotoBoardDeleteServlet에 트랜잭션을 적용하라.
+### 훈련2: PlatformTransactionManager 를 변경하라.
 
-- com.eomcs.lms.servlet.PhotoBoardDeleteServlet 변경
-  - ConnectionFactory를 주입 받는다.
-  - ConnectionFactory를 통해 Connection을 얻은 후에 트랜잭션을 제어한다.
+- com.eomcs.sql.PlatformTransactionManager 변경
+  - ConnectionFactory 대신 DataSource를 사용하도록 변경한다.
 
-### 훈련4: 트랜잭션을 다뤄야 하는 서블릿 객체에 ConnectionFactory를 주입하라.
+### 훈련3: DataSource를 사용하도록 DAO를 변경하라.
+
+- com.eomcs.lms.dao.mariadb.XxxDaoImpl 변경
+  - ConnectionFactory 대신 DataSource를 사용하도록 변경한다.
+  
+### 훈련4: DataSource를 DAO에 주입하라.
+
+- com.eomcs.lms.DataLoaderListener 변경
+  - ConnectionFactory 대신 DataSource 객체를 생성한다.
+  - DAO에 DataSource를 주입한다.
+  - 애플리케이션이 종료될 때 모든 DB 커넥션을 닫는다.
+  
+### 훈련5: 클라이언트 요청을 처리한 후 Connection을 닫지 말고 반납하라.
 
 - com.eomcs.lms.ServerApp 변경
-  - PhotoBoardAddServlet, PhotoBoardUpdateServlet, PhotoBoardDeleteServlet 객체에
-    ConectionFactory를 주입한다.
-
-### 훈련5: /photoboard/add, /photoboard/update, /photoboard/delete을 테스트 해 보라.
+  - 클라이언트에게 응답한 후 스레드에서 커넥션 객체를 제거한다.
+  - 제거된 커넥션 객체는 재사용하기 위해 닫지 않는다.
+  
+### 훈련7: /photoboard/add, /photoboard/update, /photoboard/delete을 테스트 해 보라.
