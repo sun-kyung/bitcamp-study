@@ -15,12 +15,16 @@
     <result column="cdt" property="registeredDate"/>
   </resultMap>
   
+  <sql id="select1">
+  member_id,
+  name,
+  email,
+  tel,
+  </sql>
+  
   <select id="selectMember" resultMap="MemberMap">
     select 
-      member_id, 
-      name, 
-      email, 
-      tel, 
+      <include refid="select1"/>
       cdt
     from lms_member
   </select>
@@ -36,11 +40,9 @@
   </insert>
   
   <select id="selectDetail" resultMap="MemberMap" parameterType="int">
-    select member_id, 
-      name, 
-      email, 
+    select 
+    <include refid="select1"/>
       pwd, 
-      tel, 
       photo
     from lms_member
     where member_id=#{no}
@@ -48,12 +50,14 @@
   
   <update id="updateMember" parameterType="Member">
     update 
-      lms_member set
-      name=#{name}, 
-      email=#{email}, 
-      pwd=password(#{password}), 
-      tel=#{tel}, 
-      photo=#{photo}
+      lms_member
+      <set>
+      <if test="name != null and name != ''">name=#{name},</if>
+      <if test="email != null and email != ''">email=#{email},</if>
+      <if test="password != null and password != ''">pwd=password(#{password}),</if>
+      <if test="tel != null and tel != ''">tel=#{tel},</if>
+      <if test="photo != null and photo != ''">photo=#{photo}</if>
+      </set>
     where member_id=#{no}
   </update>
   
@@ -64,10 +68,8 @@
   </delete>
   
   <select id="selectKeyword" resultMap="MemberMap" parameterType="String">
-    select member_id, 
-      name, 
-      email, 
-      tel, 
+    select 
+    <include refid="select1"/>
       cdt
     from lms_member
     where name like #{name}
@@ -76,11 +78,9 @@
   </select>
   
   <select id="selectEmailandPassword" resultMap="MemberMap" parameterType="String">
-    select member_id, 
-      name, 
-      email,
+    select 
+    <include refid="select1"/>
       pwd, 
-      tel, 
       photo
     from lms_member
     where email=#{email} 

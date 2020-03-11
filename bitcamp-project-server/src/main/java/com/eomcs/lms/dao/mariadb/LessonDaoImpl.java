@@ -1,6 +1,7 @@
 package com.eomcs.lms.dao.mariadb;
 
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
@@ -18,7 +19,6 @@ public class LessonDaoImpl implements LessonDao {
   public int insert(Lesson lesson) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.insert("LessonMapper.insertLesson", lesson);
-      sqlSession.commit();
       return count;
     }
   }
@@ -27,6 +27,13 @@ public class LessonDaoImpl implements LessonDao {
   public List<Lesson> findAll() throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.selectList("LessonMapper.selectLesson");
+    }
+  }
+
+  @Override
+  public List<Lesson> findByKeyword(Map<String, Object> params) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("LessonMapper.selectLesson", params);
     }
   }
 
@@ -41,7 +48,6 @@ public class LessonDaoImpl implements LessonDao {
   public int update(Lesson lesson) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.update("LessonMapper.updateLesson", lesson);
-      sqlSession.commit();
       return count;
     }
   }
@@ -50,7 +56,6 @@ public class LessonDaoImpl implements LessonDao {
   public int delete(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.delete("LessonMapper.deleteLesson", no);
-      sqlSession.commit();
       return count;
     }
   }
