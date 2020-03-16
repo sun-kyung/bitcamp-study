@@ -43,6 +43,7 @@ import com.eomcs.lms.servlet.PhotoBoardListServlet;
 import com.eomcs.lms.servlet.PhotoBoardUpdateServlet;
 import com.eomcs.lms.servlet.Servlet;
 import com.eomcs.sql.SqlSessionFactoryProxy;
+import com.eomcs.util.ApplicationContext;
 
 public class ServerApp {
 
@@ -58,6 +59,9 @@ public class ServerApp {
 
   // 서버 멈춤 여부 설정 변수
   boolean serverStop = false;
+
+  // IoC 컨테이너 준비
+  ApplicationContext iocContainer;
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
@@ -237,7 +241,7 @@ public class ServerApp {
     System.out.println("서버 수업 관리 시스템입니다.");
 
     ServerApp app = new ServerApp();
-    app.addApplicationContextListener(new DataLoaderListener());
+    app.addApplicationContextListener(new ContextLoaderListener());
     app.service();
   }
 }

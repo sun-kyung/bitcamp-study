@@ -11,23 +11,28 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
-import com.eomcs.lms.service.impl.BoardServiceImpl2;
+import com.eomcs.lms.service.impl.BoardServiceImpl;
 import com.eomcs.lms.service.impl.LessonServiceImpl;
 import com.eomcs.lms.service.impl.MemberServiceImpl;
 import com.eomcs.lms.service.impl.PhotoBoardServiceImpl;
 import com.eomcs.sql.MybatisDaoFactory;
 import com.eomcs.sql.PlatformTransactionManager;
 import com.eomcs.sql.SqlSessionFactoryProxy;
+import com.eomcs.util.ApplicationContext;
 
 // 애플리케이션이 시작되거나 종료될 때
 // 데이터를 로딩하고 저장하는 일을 한다.
 //
-public class DataLoaderListener implements ApplicationContextListener {
+public class ContextLoaderListener implements ApplicationContextListener {
 
   @Override
   public void contextInitialized(Map<String, Object> context) {
 
     try {
+      // IoC 컨테이너 준비
+      ApplicationContext appCtx = new ApplicationContext("com.eomcs.lms");
+      context.put("iocContainer", appCtx);
+
       // Mybatis 객체 준비
       InputStream inputStream = Resources.getResourceAsStream(//
           "com/eomcs/lms/conf/mybatis-config.xml");
@@ -55,7 +60,7 @@ public class DataLoaderListener implements ApplicationContextListener {
       context.put("lessonService", new LessonServiceImpl(lessonDao));
       context.put("photoBoardService",
           new PhotoBoardServiceImpl(txManager, photoBoardDao, photoFileDao));
-      context.put("boardService", new BoardServiceImpl2(sqlSessionFactory));
+      context.put("boardService", new BoardServiceImpl(boardDao));
       context.put("memberService", new MemberServiceImpl(memberDao));
 
     } catch (Exception e) {
