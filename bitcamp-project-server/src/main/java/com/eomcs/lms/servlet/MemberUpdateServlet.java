@@ -6,9 +6,10 @@ import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
+import com.eomcs.util.RequestMapping;
 
-@Component("/member/update")
-public class MemberUpdateServlet implements Servlet {
+@Component
+public class MemberUpdateServlet {
 
   MemberService memberService;
 
@@ -16,7 +17,7 @@ public class MemberUpdateServlet implements Servlet {
     this.memberService = memberService;
   }
 
-  @Override
+  @RequestMapping("/member/update")
   public void service(Scanner in, PrintStream out) throws Exception {
     int no = Prompt.getInt(in, out, "번호? ");
 
@@ -30,14 +31,14 @@ public class MemberUpdateServlet implements Servlet {
 
     member.setNo(no);
     member.setName(Prompt.getString(in, out, //
-        String.format("이름(%s)? \n", old.getName())));
+        String.format("이름(%s)? ", old.getName())));
     member.setEmail(Prompt.getString(in, out, //
-        String.format("이메일(%s)? \n", old.getEmail())));
+        String.format("이메일(%s)? ", old.getEmail())));
     member.setPassword(Prompt.getString(in, out, "암호? "));
     member.setPhoto(Prompt.getString(in, out, //
-        String.format("사진(%s)? \n", old.getPhoto())));
+        String.format("사진(%s)? ", old.getPhoto())));
     member.setTel(Prompt.getString(in, out, //
-        String.format("전화(%s)? \n", old.getTel())));
+        String.format("전화(%s)? ", old.getTel())));
 
     if (memberService.update(member) > 0) {
       out.println("회원을 변경했습니다.");

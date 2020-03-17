@@ -9,9 +9,10 @@ import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.PhotoBoardService;
 import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
+import com.eomcs.util.RequestMapping;
 
-@Component("/photoboard/update")
-public class PhotoBoardUpdateServlet implements Servlet {
+@Component
+public class PhotoBoardUpdateServlet {
 
   PhotoBoardService photoBoardService;
 
@@ -19,7 +20,7 @@ public class PhotoBoardUpdateServlet implements Servlet {
     this.photoBoardService = photoBoardService;
   }
 
-  @Override
+  @RequestMapping("/photoboard/update")
   public void service(Scanner in, PrintStream out) throws Exception {
 
     int no = Prompt.getInt(in, out, "번호? ");
@@ -33,7 +34,7 @@ public class PhotoBoardUpdateServlet implements Servlet {
     PhotoBoard photoBoard = new PhotoBoard();
     photoBoard.setNo(no);
     photoBoard.setTitle(Prompt.getString(in, out, //
-        String.format("제목(%s)? \n", old.getTitle()), //
+        String.format("제목(%s)? ", old.getTitle()), //
         old.getTitle()));
 
     printPhotoFiles(out, old);
@@ -45,14 +46,12 @@ public class PhotoBoardUpdateServlet implements Servlet {
         "사진을 변경하시겠습니까?(y/N) ");
 
     if (response.equalsIgnoreCase("y")) {
-      // 사용자가 입력한 파일 목록을 PhotoBoard 객체에 저장한다
       photoBoard.setFiles(inputPhotoFiles(in, out));
     }
 
     photoBoardService.update(photoBoard);
     out.println("사진 게시글을 변경했습니다.");
   }
-
 
   private void printPhotoFiles(PrintStream out, PhotoBoard photoBoard) throws Exception {
     out.println("사진파일:");
