@@ -14,7 +14,7 @@ public class Exam01 {
     SpringUtils.printBeanList(iocContainer);
 
     // 애노테이션을 처리하는 기본 도구 외에
-    // AppConfig에서 설정한 객체(Car)도 포함하고 있다
+    // AppConfig에서 설정한 객체(Car)도 포함하고 있다.
 
     System.out.println("실행 완료!");
   }

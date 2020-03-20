@@ -1,27 +1,27 @@
-// 스프링 IoC 컨테이너 사용
+// IoC 컨테이너에서 객체 꺼내기
 package com.eomcs.spring.ioc.ex01.g;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.eomcs.spring.ioc.SpringUtils;
 import com.eomcs.spring.ioc.ex01.Car;
 
 public class Exam01 {
-
   public static void main(String[] args) {
-    // 스프링 IoC 컨테이너는 ApplicationContext를 구현한다.
-    ApplicationContext iocContainer = null;
+    ApplicationContext iocContainer = new ClassPathXmlApplicationContext(//
+        "com/eomcs/spring/ioc/ex01/g/application-context.xml");
 
-    iocContainer =
-        new ClassPathXmlApplicationContext("bitcamp/java106/step01/application-context.xml");
+    // 현재 IoC 컨테이너에 들어 있는 객체를 출력해 보자.
+    SpringUtils.printBeanList(iocContainer);
 
-    // IoC 컨테이너에 보관된 객체를 꺼내기
-    Car car = (Car) iocContainer.getBean("c1");
-    System.out.println(car);
+    // 1) 객체 이름으로 꺼내기
+    System.out.println(iocContainer.getBean("c1"));
 
-    // 존재하지 않는 자바 객체를 꺼내려 한다면?
-    // => 예외 발생!
-    car = (Car) iocContainer.getBean("c2");
+    // 2) 객체 타입으로 꺼내기
+    System.out.println(iocContainer.getBean(Car.class));
 
+    System.out.println("실행 완료!");
   }
-
 }
+
+
