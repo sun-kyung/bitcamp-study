@@ -1,4 +1,4 @@
-// 의존 객체 주입 자동화하기 - XML로 설정하기
+// 의존 객체 주입 자동화하기 - 자동화 전, XML 설정을 통한 수동 주입
 package com.eomcs.spring.ioc.ex08.a;
 
 import org.springframework.context.ApplicationContext;

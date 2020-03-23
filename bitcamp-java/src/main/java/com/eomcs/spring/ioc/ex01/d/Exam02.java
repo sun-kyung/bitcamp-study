@@ -4,7 +4,6 @@ package com.eomcs.spring.ioc.ex01.d;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.eomcs.spring.ioc.SpringUtils;
-import com.eomcs.spring.ioc.ex01.c.AppConfig;
 
 public class Exam02 {
   public static void main(String[] args) {
