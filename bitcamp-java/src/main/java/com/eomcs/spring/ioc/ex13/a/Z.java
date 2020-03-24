@@ -1,10 +1,10 @@
-package com.eomcs.spring.ioc.ex13.ex1;
+package com.eomcs.spring.ioc.ex13.a;
 
 import org.springframework.stereotype.Component;
 
 @Component 
-public class Y {
+public class Z {
   public void m() {
-    System.out.println("Y.m()");
+    System.out.println("Z.m()");
   }
 }
