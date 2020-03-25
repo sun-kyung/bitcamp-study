@@ -17,7 +17,7 @@ create table test1 (
 
 /* PK 컬럼 지정 */
 alter table test1
-  add constraint primary key (no);
+  add constraint test1_pk primary key (no);
 
 /* 자동 증가 컬럼 지정 */
 alter table test1
@@ -44,6 +44,15 @@ insert into test1(name,fax,tel,no,pstno,addr)
 /* no 컬럼은 필수 입력 컬럼이지만, 
   자동 증가 컬럼이기 때문에 값을 입력하지 않아도 된다.*/
 insert into test1(name,tel) values('ccc','333');
+```
+### 여러 개의 값을 한 번에 insert 하기
+
+```
+insert into test1(name,tel) values
+('aaa', '1111'),
+('bbb', '2222'),
+('ccc', '3333');
+
 ```
 
 ### select 결과를 테이블에 insert하기
