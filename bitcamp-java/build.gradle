@@ -32,7 +32,8 @@ dependencies {
     // Apache commons-dbcp 라이브러리
     implementation 'commons-dbcp:commons-dbcp:1.4'
     
-    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.11'
+    //implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
+    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
 
