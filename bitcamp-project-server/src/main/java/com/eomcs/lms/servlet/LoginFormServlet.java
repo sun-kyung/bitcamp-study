@@ -1,22 +1,24 @@
 package com.eomcs.lms.servlet;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-import org.springframework.stereotype.Component;
-import com.eomcs.lms.service.LessonService;
-import com.eomcs.util.RequestMapping;
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
 
-@Component
-public class LoginFormServlet {
+@WebServlet("/auth/loginForm")
+public class LoginFormServlet extends GenericServlet {
 
-  LessonService lessonService;
+  private static final long serialVersionUID = 1L;
 
-  public LoginFormServlet(LessonService lessonService) {
-    this.lessonService = lessonService;
-  }
+  @Override
+  public void service(ServletRequest req, ServletResponse res)
+      throws ServletException, IOException {
+    res.setContentType("text/html;charset=UTF-8");
+    PrintWriter out = res.getWriter();
 
-  @RequestMapping("/auth/loginForm")
-  public void service(Map<String, String> params, PrintWriter out) throws Exception {
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
