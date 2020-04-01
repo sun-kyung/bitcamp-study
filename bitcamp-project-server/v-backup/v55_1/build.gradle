@@ -2,8 +2,7 @@
 plugins {
     id 'java'
 
-    // 'eclipse' 플러그인 기능을 포함한다 
-    id 'eclipse-wtp'
+    id 'eclipse'
     
     id 'war'
 }
