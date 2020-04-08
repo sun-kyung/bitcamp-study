@@ -29,13 +29,20 @@ public class Servlet06 extends GenericServlet {
 
     // 같은 이름으로 여러 개의 데이터를 보낼 수 있다.
     // => 예) name=aaa&name=bbb&name=ccc
-    String[] names = req.getParameterValues("name");
+    String[] genre1 = req.getParameterValues("genre1");
+    String[] genre2 = req.getParameterValues("genre2");
+    String[] genre3 = req.getParameterValues("genre3");
+    String[] genre4 = req.getParameterValues("genre4");
+    String[] genre5 = req.getParameterValues("genre5");
+    String[] genre6 = req.getParameterValues("genre6");
 
     res.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = res.getWriter();
 
-    out.println(req.getParameter("name"));
-    out.println("---------------------------------");
+    out.println("선택한 장르");
+    if (genre1 != null) {
+      out.println("로맨틱");
+    }
     for (String name : names) {
       out.printf("이름=%s\n", name);
     }

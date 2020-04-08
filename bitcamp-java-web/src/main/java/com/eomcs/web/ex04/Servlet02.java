@@ -55,13 +55,19 @@ public class Servlet02 extends GenericServlet {
     //
     req.setCharacterEncoding("UTF-8");
 
-    int age = Integer.parseInt(req.getParameter("age"));
+    String age = req.getParameter("age");
     String name = req.getParameter("name");
 
     res.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = res.getWriter();
     out.printf("이름=%s\n", name);
-    out.printf("나이=%d\n", age);
+    out.printf("나이=%s\n", age);
+    out.println("-------------------");
+
+    char[] chars = name.toCharArray();
+    for (char c : chars) {
+      out.printf("%x\n", (int) c);
+    }
   }
 }
 
