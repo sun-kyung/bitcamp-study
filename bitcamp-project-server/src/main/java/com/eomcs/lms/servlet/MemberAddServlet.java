@@ -2,57 +2,86 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.GenericServlet;
+import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
-@Component
-public class MemberAddServlet extends GenericServlet {
-
+@WebServlet("/member/add")
+@MultipartConfig(maxFileSize = 10000000)
+public class MemberAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
-      res.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = res.getWriter();
+      response.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = response.getWriter();
 
-      ServletContext servletContext = req.getServletContext();
+      request.getRequestDispatcher("/header").include(request, response);
+
+      out.println("<h1>회원 입력</h1>");
+      out.println("<form action='add' method='post' enctype='multipart/form-data'>");
+      out.println("이름: <input name='name' type='text'><br>");
+      out.println("이메일: <input name='email' type='email'><br>");
+      out.println("암호: <input name='password' type='password'><br>");
+      out.println("사진: <input name='photo' type='file'><br>");
+      out.println("전화: <input name='tel' type='tel'><br>");
+      out.println("<button>제출</button>");
+      out.println("</form>");
+
+      request.getRequestDispatcher("/footer").include(request, response);
+
+    } catch (Exception e) {
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
+    }
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    try {
+      request.setCharacterEncoding("UTF-8");
+
+      ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
-
       MemberService memberService = iocContainer.getBean(MemberService.class);
 
       Member member = new Member();
-      member.setName(req.getParameter("name"));
-      member.setEmail(req.getParameter("email"));
-      member.setPassword(req.getParameter("password"));
-      member.setPhoto(req.getParameter("photo"));
-      member.setTel(req.getParameter("tel"));
+      member.setName(request.getParameter("name"));
+      member.setEmail(request.getParameter("email"));
+      member.setPassword(request.getParameter("password"));
+      member.setTel(request.getParameter("tel"));
 
-      memberService.add(member);
+      Part photoPart = request.getPart("photo");
+      if (photoPart.getSize() > 0) {
+        String dirPath = getServletContext().getRealPath("/upload/member");
+        String filename = UUID.randomUUID().toString();
+        photoPart.write(dirPath + "/" + filename);
+        member.setPhoto(filename);
+      }
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='refresh' content='2;url=/member/list'>");
-      out.println("<title>회원 입력</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>회원 입력 결과</h1>");
-      out.println("<p>새 회원을 등록했습니다.</p>");
-      out.println("</body>");
-      out.println("</html>");
+      if (memberService.add(member) > 0) {
+        response.sendRedirect("list");
+      } else {
+        throw new Exception("회원을 추가할 수 없습니다.");
+      }
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
