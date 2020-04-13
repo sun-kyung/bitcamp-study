@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -31,8 +30,6 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     int lessonNo = Integer.parseInt(request.getParameter("lessonNo"));
     try {
-      response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
 
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
@@ -40,26 +37,10 @@ public class PhotoBoardAddServlet extends HttpServlet {
       LessonService lessonService = iocContainer.getBean(LessonService.class);
 
       Lesson lesson = lessonService.get(lessonNo);
-
-      request.getRequestDispatcher("/header").include(request, response);
-
-      out.println("<h1>사진 입력</h1>");
-      out.println("<form action='add' method='post' enctype='multipart/form-data'>");
-      out.printf("강의번호: <input name='lessonNo' type='text' value='%d' readonly><br>\n", //
-          lesson.getNo());
-      out.printf("강의명: %s<br>\n", lesson.getTitle());
-      out.println("내용:<br>");
-      out.println("<textarea name='title' rows='5' cols='60'></textarea><br>");
-      out.println("<hr>");
-      out.println("사진: <input name='photo' type='file'><br>");
-      out.println("사진: <input name='photo' type='file'><br>");
-      out.println("사진: <input name='photo' type='file'><br>");
-      out.println("사진: <input name='photo' type='file'><br>");
-      out.println("사진: <input name='photo' type='file'><br>");
-      out.println("<button>제출</button>");
-      out.println("</form>");
-
-      request.getRequestDispatcher("/footer").include(request, response);
+      request.setAttribute("lesson", lesson);
+      
+      response.setContentType("text/html;charset=UTF-8");
+      request.getRequestDispatcher("/photoboard/form.jsp").include(request, response);
 
     } catch (Exception e) {
       request.setAttribute("error", e);
