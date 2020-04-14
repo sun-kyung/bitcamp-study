@@ -7,12 +7,8 @@
 
 <jsp:include page="/header.jsp"/>
 
-<% 
-  Lesson lesson = (Lesson) request.getAttribute("lesson");
-%>
-
-  <h1>강의 사진(JSP) - <a href='../lesson/detail?no=<%=lesson.getNo()%>'><%=lesson.getTitle()%></a></h1>  
-  <a href='add?lessonNo=<%=lesson.getNo()%>'>새 사진</a><br>
+  <h1>강의 사진(JSP + EL) - <a href='../lesson/detail?no=${lesson.no}'>${lesson.title}</a></h1>  
+  <a href='add?lessonNo=${lesson.no}'>새 사진</a><br>
   <table border='1'>
   <tr>
     <th>번호</th>
@@ -20,15 +16,20 @@
     <th>등록일</th>
     <th>조회수</th>
   </tr>
+  
+<jsp:useBean id="list" 
+  type="java.util.List<PhotoBoard>"
+  class="java.util.ArrayList"
+  scope="request"/>  
 <% 
-  List<PhotoBoard> list = (List<PhotoBoard>) request.getAttribute("list");
   for(PhotoBoard item : list) {
+    pageContext.setAttribute("item", item);
 %>
   <tr>
-    <td><%=item.getNo()%></td> 
-    <td><a href='detail?no=<%=item.getNo()%>'><%=item.getTitle()%></a></td> 
-    <td><%=item.getCreatedDate()%></td> 
-    <td><%=item.getViewCount()%></td>
+    <td>${item.no}</td> 
+    <td><a href='detail?no=${item.no}'>${item.title}</a></td> 
+    <td>${item.createdDate}</td> 
+    <td>${item.viewCount}</td>
   </tr>
 <%
   }

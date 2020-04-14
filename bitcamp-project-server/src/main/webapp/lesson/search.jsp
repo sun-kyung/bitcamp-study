@@ -6,7 +6,7 @@
 
 <jsp:include page="/header.jsp"/>
 
-  <h1>강의 검색 결과(JSP)</h1>
+  <h1>강의 검색 결과(JSP + EL)</h1>
   <table border='1'>
   <tr>
     <th>번호</th>
@@ -14,15 +14,20 @@
     <th>기간</th>
     <th>총강의시간</th>
   </tr>
+  
+<jsp:useBean id="list" 
+  type="java.util.List<Lesson>"
+  class="java.util.ArrayList"
+  scope="request"/>
 <% 
-  List<Lesson> list = (List<Lesson>) request.getAttribute("list");
   for(Lesson item : list) {
+    pageContext.setAttribute("item", item);
 %>
     <tr>
-      <td><%=item.getNo()%></td> 
-      <td><a href='detail?no=<%=item.getNo()%>'><%=item.getTitle()%></a></td> 
-      <td><%=item.getStartDate()%> ~ <%=item.getEndDate()%></td> 
-      <td><%=item.getTotalHours()%></td>
+      <td>${item.no}</td> 
+      <td><a href='detail?no=${item.no}'>${item.title}</a></td> 
+      <td>${item.startDate} ~ ${item.endDate}</td> 
+      <td>${item.totalHours}</td>
     </tr>
 <%
   }

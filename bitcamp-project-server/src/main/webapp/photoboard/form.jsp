@@ -4,13 +4,11 @@
     trimDirectiveWhitespaces="true"%>
 
 <jsp:include page="/header.jsp"/>
-<%
-Lesson lesson = (Lesson) request.getAttribute("lesson");
-%>
-<h1>사진 입력(JSP)</h1>
+
+<h1>사진 입력(JSP + EL)</h1>
 <form action='add' method='post' enctype='multipart/form-data'>
-강의번호: <input name='lessonNo' type='text' value='<%=lesson.getNo()%>' readonly><br>
-강의명: <%=lesson.getTitle()%><br>
+강의번호: <input name='lessonNo' type='text' value='${lesson.no}' readonly><br>
+강의명: ${lesson.title}<br>
 내용:<br>
 <textarea name='title' rows='5' cols='60'></textarea><br>
 <hr>
