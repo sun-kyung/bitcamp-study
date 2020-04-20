@@ -1,6 +1,7 @@
 <%@page import="com.eomcs.lms.domain.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,23 +36,14 @@ div.container {
     <li class='nav-item'>
       <a class='nav-link' href='../member/list'>회원</a>
     </li>
-    <li class='nav-item'>
-      <a class='nav-link' href='../auth/login'>로그인</a>
-    </li>
   </ul>
-<% 
-Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-if (loginUser != null) {
-%>
-  <span class='navbar-text'><%=loginUser.getName()%></span>
+<c:if test="${not empty loginUser}">
+  <span class='navbar-text'>${loginUser.name}</span>
   <a href='../auth/logout' class='btn btn-success btn-sm'>로그아웃</a>
-<%
-} else {
-%>
-  <a href='../auth/login' class='btn btn-success btn-sm'>로그인</a>
-<%
-}
-%> 
+</c:if>
+<c:if test="${empty loginUser}">
+  <a href='../auth/form' class='btn btn-success btn-sm'>로그인</a>
+</c:if> 
 </div>
 </nav>
 <div class='container'>

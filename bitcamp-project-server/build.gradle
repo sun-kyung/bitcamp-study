@@ -1,15 +1,17 @@
-
 plugins {
     id 'java'
-
-    // 'eclipse' 플러그인 기능을 포함한다 
-    id 'eclipse-wtp'
     
+    id 'eclipse-wtp'
+    // => 'eclipse' 플러그인 기능을 포함한다.
+    // => 이클립스 웹 프로젝트용 설정 파일을 생성한다.
+
     id 'war'
+    // => 배치 관련 기능을 처리한다.
 }
+
 tasks.withType(JavaCompile) {
-    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다
-    options.encoding = 'UTF-8'
+    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+    options.encoding = 'UTF-8' 
 
     // 소스 파일을 작성할 때 사용할 자바 버전
     sourceCompatibility = '1.8'
@@ -23,45 +25,61 @@ repositories {
 }
 
 dependencies {
+  // Reflection API를 좀 더 쉽게 사용하게 도와주는 유틸리티
+  implementation 'org.reflections:reflections:0.9.12'
 
-    // log4j 1.2.x 라이브러리
-    // implementation 'log4j:log4j:1.2.17'
-    
-    // log4j 2.x 라이브러리
-    implementation 'org.apache.logging.log4j:log4j-core:2.13.1'
+  // log4j 1.2.x 라이브러리
+  //implementation 'log4j:log4j:1.2.17'
+  
+  // log4j 2.x 라이브러리
+  implementation 'org.apache.logging.log4j:log4j-core:2.13.1'
+  
+  // MariaDB JDBC 드라이버
+  implementation 'org.mariadb.jdbc:mariadb-java-client:2.5.4'
 
-    // MariaDB JDBC드라이버
-    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.5.4'
+  // Mybatis 퍼시스턴스 프레임워크
+  implementation 'org.mybatis:mybatis:3.5.4'
 
-    // Mybatis 퍼시스턴스 프레임워크
-    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.4'
-    
-    // Spring IoC 컨테이너
-    implementation 'org.springframework:spring-context:5.2.4.RELEASE'
+  // Spring WebMVC 라이브러리 
+  implementation 'org.springframework:spring-webmvc:5.2.5.RELEASE'
 
-    // Spring JDBC 관련 라이브러리
-    implementation 'org.springframework:spring-jdbc:5.2.4.RELEASE'
-    
-    // Mybatis를 Spring IoC와 연결하는 어댑터 라이브러리
-    implementation 'org.mybatis:mybatis-spring:2.0.4'
+  // Spring IoC 컨테이너
+  // => Spring WebMVC 라이브러리 spring-context 라이브러리를 사용하기 때문에  
+  //    자동으로 추가된다.
+  // => 따라서 그래이들 스크립트 파일에 명시할 필요가 없다.
+  // implementation 'org.springframework:spring-context:5.2.5.RELEASE'
 
-    // Json형식의 문자열을 다루는 라이브러리
-    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
-    
-    // Apache HttpComponents 라이브러리
-    implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
-    
-    // Servlet-API
-    // => 컴파일할 때만 사용한다
-    // => 배치할 때는 포함하지 않는다
-    // => 서버에 이미 이 라이브러리가 있기 때문이다
-    // 의존 라이브러리 옵션
-    // => implementation : 컴파일한 후에 생성되는 빌드 파일에 포함된다
-    // => compileOnly : 컴파일한 후 생성되는 빌드 파일에 포함되지 않는다
-    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-    
-    implementation 'com.google.guava:guava:28.0-jre'
+  // Spring JDBC 관련 라이브러리
+  implementation 'org.springframework:spring-jdbc:5.2.5.RELEASE'
+  
+  // Mybatis를 Spring IoC와 연결하는 어댑터 라이브러리
+  implementation 'org.mybatis:mybatis-spring:2.0.4'
 
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+  // JSON 형식의 문자열을 다루는 라이브러리
+  implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+  
+  // Apache HttpComponents 라이브러리
+  implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
+  
+  // Servlet-API
+  // => 컴파일 할 때만 사용한다.
+  // => 배치할 때는 포함하지 않는다.
+  // => 왜? 서버에 이미 이 라이브러리가 있기 때문이다.
+  // 
+  // 의존라이브러리 옵션
+  // => implementation : 컴파일한 후 생성되는 빌드 파일에 포함된다.
+  // => compileOnly : 컴파일한 후 생성되는 빌드 파일에 포함되지 않는다.
+  //
+  compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+  
+  // JSTL API 및 구현 라이브러리
+  implementation 'jstl:jstl:1.2'
+  
+  // multipart 데이터 처리 라이브러리
+  // Servlet 3.0의 Multipart를 사용하지 않는다면 apache의 multipart 처리기를 등록해야 한다
+  implementation 'commons-fileupload:commons-fileupload:1.4'
+    
+  implementation 'com.google.guava:guava:28.1-jre'
+  testImplementation 'junit:junit:4.12'
 }
+
